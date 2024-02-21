@@ -3,22 +3,24 @@ package pessoa;
 public class TesteDePessoa {
 
     public static void main(String[] args) {
-        Pessoa pessoa = new Pessoa();
-        pessoa.setCpf("12345678999");
-        pessoa.setNome("Aldo Passos");
-        pessoa.setIdade(42);
+        Professor professor = new Professor();
+        professor.setCpf("12345678999");
+        professor.setNome("Aldo Passos");
+        professor.setIdade(42);
+        professor.setSalario(20000);
         
-        System.out.println(pessoa.getNome());
+        System.out.println(professor.getNome());
 
-        Pessoa pessoa2 = new Pessoa();
-        pessoa2.setCpf("12345678999");
-        pessoa2.setNome("Rafael Passos");
-        pessoa2.setIdade(42);
+        Aluno aluno = new Aluno();
+        aluno.setCpf("12345678999");
+        aluno.setNome("Rafael Passos");
+        aluno.setIdade(42);
+        aluno.setMatricula("59836");
         
-        System.out.println(pessoa2.getNome());
+        System.out.println(aluno.getNome());
 
-        System.out.println(pessoa.imprimeDadosDaPessoa());
-        System.out.println(pessoa2.imprimeDadosDaPessoa());
+        System.out.println(professor.imprimeDadosDaPessoa());
+        System.out.println(aluno.imprimeDadosDaPessoa());
     }
     
 }
