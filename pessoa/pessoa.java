@@ -1,10 +1,32 @@
 package pessoa;
 
-public class pessoa {
-    private String nome, cpf;
+public class Pessoa {
+    private String nome;
+    private String cpf;
     private int idade;
+
+    public String getNome() {
+        return nome;
+    }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    public String getCpf() {
+        return cpf;
+    }
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+    public int getIdade() {
+        return idade;
+    }
+    public void setIdade(int idade) {
+        this.idade = idade;
+    }
     
-    public void setNome(String n){
-        this.nome = n;
-    }   
+    String imprimeDadosDaPessoa(){
+        return "O nome da pessoa é: " + nome + " a idade é: " + idade + " anos e o CPF é: " + cpf; 
+    }
+
+
 }
