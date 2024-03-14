@@ -1,4 +1,4 @@
-package br.com.aldopassos.gestao_vagas.modules.candidate.service;
+package br.com.aldopassos.gestao_vagas.modules.candidate.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
