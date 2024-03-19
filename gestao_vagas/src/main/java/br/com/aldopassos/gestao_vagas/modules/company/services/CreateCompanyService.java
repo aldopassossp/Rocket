@@ -27,7 +27,6 @@ public class CreateCompanyService {
             
             var password = passwordEncoder.encode(companyEntity.getPassword());
             companyEntity.setPassword(password);
-            System.out.println(password);
 
         return this.companyRepository.save(companyEntity);
 

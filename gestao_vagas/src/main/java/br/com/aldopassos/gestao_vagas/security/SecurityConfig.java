@@ -12,22 +12,24 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 public class SecurityConfig {
 
+    
+    // @Bean
+    // public WebSecurityCustomizer webSecurityCustomizer() {
+    //     return (web) -> web.ignoring().requestMatchers(new AntPathRequestMatcher("/**"));
+    // }
+    
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> {
                 auth.requestMatchers("/candidate/").permitAll()
-                    .requestMatchers("/company").permitAll();  
+                    .requestMatchers("/company").permitAll() 
+                    .requestMatchers("auth/company").permitAll(); 
                 auth.anyRequest().authenticated();  // Qualquer outra requisição precisa estar autenticada
             });
 
         return http.build();
-    }
-
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers(new AntPathRequestMatcher("/**"));
     }
     
     @Bean
