@@ -9,16 +9,15 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 @Service
-public class JWTProvider {
-
-    @Value(value = "${security.token.secret}")
-    private String secretKey;
+public class JWTCandidateProvider {
     
+    @Value("${security.token.secret.candidate}")
+    private String secretKey;
 
     public DecodedJWT validateToken(String token){
         
         token = token.replace("Bearer ", "");
-
+        
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
         
         try{
@@ -29,5 +28,4 @@ public class JWTProvider {
             return null;
         }
     }
-    
 }

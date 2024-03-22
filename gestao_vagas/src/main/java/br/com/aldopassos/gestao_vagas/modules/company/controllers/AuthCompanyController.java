@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.aldopassos.gestao_vagas.modules.company.dto.AuthCompanyDTO;
 import br.com.aldopassos.gestao_vagas.modules.company.services.AuthCompanyService;
 
-import javax.naming.AuthenticationException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,16 +14,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/company")
 public class AuthCompanyController {
     
     @Autowired
     private AuthCompanyService authCompanyService;
 
-    @PostMapping("/company")
+    @PostMapping("/auth")
     public ResponseEntity<Object> create(@RequestBody AuthCompanyDTO authCompanyDTO) {
-        //TODO: process POST request
-        try{
+         try{
            var result = this.authCompanyService.execute(authCompanyDTO);
            return ResponseEntity.ok().body(result);
         }catch(Exception e) {
