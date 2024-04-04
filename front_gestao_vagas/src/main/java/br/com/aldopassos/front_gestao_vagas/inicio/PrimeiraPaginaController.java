@@ -1,4 +1,4 @@
-package br.com.aldopassos.front_gestao_vagas;
+package br.com.aldopassos.front_gestao_vagas.inicio;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
