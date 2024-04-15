@@ -39,9 +39,18 @@
                 </button>
            </form>
 
-           <div th:each="job:${jobs}" class="text-white"> 
-                <h2 th:text="${job.description}"></h2>
-           </div>
+           <div class="max-w-md mx-auto mt-10">
+                <form th:action="@{/candidate/jobs/apply}" method="post">
+                    <div th:each="job:${jobs}" class="text-white bg-gray-800 rounded-lg p-4 shadow-md text-justify"> 
+                            <input type="hidden" name="jobId" th:value="${job.id}"/>
+                            <h2 th:text="${job.description}" class="font-bold"></h2>
+                            <span th:text="${job.level}"></span>
+                            <span class="mt-4 block font-bold">Benefícios:</span>
+                            <span th:text="${job.benefits}" class="block"></span>
+                            <button class="bg-gray-500 hover:bg-gray-400 text-white font-bold py-2 px-4 rounded">Aplicar</button>
+                    </div>
+                </form>
+            </div>
         </div>
         
 

@@ -1,5 +1,7 @@
 package br.com.aldopassos.front_gestao_vagas.modules.candidate.controller;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.aldopassos.front_gestao_vagas.modules.candidate.dto.CreateCandidateDTO;
+import br.com.aldopassos.front_gestao_vagas.modules.candidate.service.ApplyJobService;
 import br.com.aldopassos.front_gestao_vagas.modules.candidate.service.CandidateService;
 import br.com.aldopassos.front_gestao_vagas.modules.candidate.service.FindJobsService;
 import br.com.aldopassos.front_gestao_vagas.modules.candidate.service.ProfileCandidateService;
@@ -37,6 +41,9 @@ public class CandidateController {
 
     @Autowired
     private FindJobsService findJobsService;
+
+    @Autowired
+    private ApplyJobService applyJobService;
     
     @GetMapping("/login")
     public String login() {
@@ -95,6 +102,25 @@ public class CandidateController {
             return "redirect:/candidate/login";
         }
         return "candidate/jobs";
+    }
+
+    @PostMapping("/jobs/apply")
+    @PreAuthorize("hasRole('CANDIDATE')")
+    public String applyJob(@RequestParam("jobId") UUID jobId){
+        this.applyJobService.execute(getToken(), jobId);
+        return "redirect:/candidate/jobs";
+    }
+
+    @GetMapping("/create")
+    public String create(Model model){
+        model.addAttribute("candidate", new CreateCandidateDTO());
+        return "candidate/create";
+    }
+
+    @PostMapping("/create")
+    public String save(CreateCandidateDTO candidate, Model model){
+        model.addAttribute("candidate", candidate);
+        return "redirect:/candidate/login";
     }
 
     private String getToken(){
