@@ -20,8 +20,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.com.aldopassos.front_gestao_vagas.modules.candidate.dto.CreateCandidateDTO;
 import br.com.aldopassos.front_gestao_vagas.modules.candidate.service.ApplyJobService;
 import br.com.aldopassos.front_gestao_vagas.modules.candidate.service.CandidateService;
+import br.com.aldopassos.front_gestao_vagas.modules.candidate.service.CreateCandidateService;
 import br.com.aldopassos.front_gestao_vagas.modules.candidate.service.FindJobsService;
 import br.com.aldopassos.front_gestao_vagas.modules.candidate.service.ProfileCandidateService;
+import br.com.aldopassos.front_gestao_vagas.utils.FormatErrorMessage;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,6 +46,9 @@ public class CandidateController {
 
     @Autowired
     private ApplyJobService applyJobService;
+
+    @Autowired
+    private CreateCandidateService createCandidateService;
     
     @GetMapping("/login")
     public String login() {
@@ -119,6 +124,12 @@ public class CandidateController {
 
     @PostMapping("/create")
     public String save(CreateCandidateDTO candidate, Model model){
+
+        try{
+            this.createCandidateService.execute(candidate);
+        }catch(HttpClientErrorException ex) {
+            model.addAttribute("error_message", FormatErrorMessage.formatErrorMessage(ex.getResponseBodyAsString()));
+        }
         model.addAttribute("candidate", candidate);
         return "redirect:/candidate/login";
     }
