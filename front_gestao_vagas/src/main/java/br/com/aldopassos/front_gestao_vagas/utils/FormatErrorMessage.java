@@ -5,16 +5,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class FormatErrorMessage {
     
-    public static String formatErrorMessage(String message){
+    public static String formatErrorMessage(String string){
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            JsonNode rootNode = objectMapper.readTree(message);
+            JsonNode rootNode = objectMapper.readTree(string);
             if(rootNode.isArray()){
                 return formaArrayErrorMessage(rootNode);
             }
             return rootNode.asText();
         } catch (Exception e) {
-            return message;
+            return string;
         }
     }
 
