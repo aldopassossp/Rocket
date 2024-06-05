@@ -13,7 +13,7 @@ import br.com.aldopassos.front_gestao_vagas.modules.candidate.dto.Token;
 @Service
 public class LoginCompanyService {
 
-    public Token login(String username, String password){
+    public Token execute(String username, String password){
 
         RestTemplate rt = new RestTemplate();
 

@@ -3,6 +3,7 @@ package br.com.aldopassos.gestao_vagas.modules.company.controllers;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +25,8 @@ public class JobController {
 
     @PostMapping("/")
     @PreAuthorize("hasRole('COMPANY')")
+    @Tag(name = "Vagas", description = "Informações das Vagas")
+    @Operation(sumary = "Cadastro de vagas", description = "Essa função é responsável por cadastrar as vagas dentro da aplicação")
     public JobEntity create(@Valid @RequestBody CreateJobDTO createJobDTO, HttpServletRequest request){
 
         var companyId = request.getAttribute("company_id");
@@ -37,5 +40,9 @@ public class JobController {
             .build();
 
         return this.createJobService.execute(jobEntity);
+    }
+
+    public ResponseEntity<Object> listByCompany(HttpServletRequest request) {
+        var companyId = request.getAttribute("company_id");
     }
 }

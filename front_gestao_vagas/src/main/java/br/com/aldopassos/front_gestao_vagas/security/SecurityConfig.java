@@ -15,8 +15,8 @@ public class SecurityConfig {
                 .requestMatchers("/candidate/create").permitAll()
                 .requestMatchers("/candidate/signIn").permitAll()
                 .requestMatchers("/candidate/signOut").permitAll()
-                .requestMatchers("/company/create").permitAll();
-                .requestMatchers("/company/sigIn").permitAll();
+                .requestMatchers("/company/create").permitAll()
+                .requestMatchers("/company/sigIn").permitAll()
                 .requestMatchers("/company/login").permitAll();
             auth.anyRequest().authenticated();
         })
