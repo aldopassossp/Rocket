@@ -15,7 +15,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.client.RestTemplate;
 
 import br.com.aldopassos.front_gestao_vagas.modules.candidate.dto.JobDTO;
-import br.com.aldopassos.front_gestao_vagas.modules.candidate.dto.ProfileUserDTO;
 
 @Service
 public class FindJobsService {
