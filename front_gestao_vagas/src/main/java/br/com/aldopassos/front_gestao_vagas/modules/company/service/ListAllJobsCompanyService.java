@@ -2,6 +2,7 @@ package br.com.aldopassos.front_gestao_vagas.modules.company.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +14,9 @@ import br.com.aldopassos.front_gestao_vagas.modules.candidate.dto.JobDTO;
 
 @Service
 public class ListAllJobsCompanyService {
+
+    @Value("${host.api.gestaao.vagas}")
+    private String hostApiGestaoVagas;
     
     public List<JobDTO> execute(String token){
 
@@ -26,7 +30,8 @@ public class ListAllJobsCompanyService {
             
         };
 
-        var result = rt.exchange("http://localhost:8080/company/job/", HttpMethod.GET, httpEntity, responseType);
+        String url = hostApiGestaoVagas.concat("/company/job/");
+        var result = rt.exchange(url, HttpMethod.GET, httpEntity, responseType);
         return result.getBody();
     }
 }

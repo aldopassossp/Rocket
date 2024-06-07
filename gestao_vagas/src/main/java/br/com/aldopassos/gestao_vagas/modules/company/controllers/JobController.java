@@ -16,11 +16,11 @@ import br.com.aldopassos.gestao_vagas.modules.company.dto.CreateJobDTO;
 import br.com.aldopassos.gestao_vagas.modules.company.entities.JobEntity;
 import br.com.aldopassos.gestao_vagas.modules.company.services.CreateJobService;
 import br.com.aldopassos.gestao_vagas.modules.company.services.ListAllJobsByCompanyService;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
