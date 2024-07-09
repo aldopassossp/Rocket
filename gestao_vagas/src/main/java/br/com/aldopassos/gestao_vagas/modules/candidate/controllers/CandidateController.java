@@ -23,6 +23,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 import br.com.aldopassos.gestao_vagas.modules.candidate.CandidateEntity;
 import br.com.aldopassos.gestao_vagas.modules.candidate.dto.ProfileCandidateResponseDTO;
+import br.com.aldopassos.gestao_vagas.modules.candidate.services.ApplyJobCandidateService;
 import br.com.aldopassos.gestao_vagas.modules.candidate.services.CreateCandidateService;
 import br.com.aldopassos.gestao_vagas.modules.candidate.services.ProfileCandidateService;
 import br.com.aldopassos.gestao_vagas.modules.candidate.services.ListAllJobsByFilterService;
@@ -43,6 +44,9 @@ public class CandidateController {
 
     @Autowired
     private ListAllJobsByFilterService listAllJobsByFilterService;
+
+    @Autowired
+    private ApplyJobCandidateService applyJobCandidateService;
 
     @PostMapping("/")
     @Operation(summary = "Cadastro do Candidato", description = "Essa função é responsável por cadastrar um candidato candidato.")
@@ -89,5 +93,22 @@ public class CandidateController {
     @SecurityRequirement(name = "jwt_auth")
     public List<JobEntity> findJobByFilter(@RequestParam String filter){
         return this.listAllJobsByFilterService.execute(filter);
+    }
+
+    @PostMapping("/job/apply")
+    @PreAuthorize("hasRole('CANDIDATE')")
+    @SecurityRequirement(name = "jwt_auth")
+    @Operation(summary = "Inscrição do candidato para uma vaga", description = "Essa função é responsável por realizar a inscriçaõ do candidato em uma vaga, basseada no filtro")
+    public ResponseEntity<Object> applyJob(HttpServletRequest request, @RequestBody UUID idJob){
+
+        var idCandidate = request.getAttribute("candidate_id");
+
+        try{
+            var result = this.applyJobCandidateService.execute(UUID.fromString(idCandidate.toString()), idJob);
+            return ResponseEntity.ok().body(result);
+        }catch(Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        
     }
 }

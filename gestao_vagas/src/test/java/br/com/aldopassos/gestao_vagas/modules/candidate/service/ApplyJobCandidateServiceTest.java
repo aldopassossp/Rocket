@@ -1,5 +1,6 @@
 package br.com.aldopassos.gestao_vagas.modules.candidate.service;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.Optional;
@@ -16,6 +17,9 @@ import br.com.aldopassos.gestao_vagas.exceptions.JobNotFoundException;
 import br.com.aldopassos.gestao_vagas.exceptions.UserNotFoundException;
 import br.com.aldopassos.gestao_vagas.modules.candidate.CandidateEntity;
 import br.com.aldopassos.gestao_vagas.modules.candidate.CandidateRepository;
+import br.com.aldopassos.gestao_vagas.modules.candidate.entity.ApplyJobEntity;
+import br.com.aldopassos.gestao_vagas.modules.company.entities.JobEntity;
+import br.com.aldopassos.gestao_vagas.modules.candidate.repository.ApplyJobRepository;
 import br.com.aldopassos.gestao_vagas.modules.candidate.services.ApplyJobCandidateService;
 import br.com.aldopassos.gestao_vagas.modules.company.repositories.JobRepository;
 
@@ -30,6 +34,9 @@ public class ApplyJobCandidateServiceTest {
 
     @Mock
     private JobRepository jobRepository;
+
+    @Mock
+    private ApplyJobRepository applyJobRepository;
     
     @Test
     @DisplayName("Should not be able to apply job with candidate not found")
@@ -59,5 +66,28 @@ public class ApplyJobCandidateServiceTest {
         } catch (Exception e) {
            org.assertj.core.api.Assertions.assertThat(e).isInstanceOf(JobNotFoundException.class);
         }
+    }
+
+    @Test
+    public void should_be_able_to_create_a_new_apply_job() {
+
+        var idCandidate = UUID.randomUUID();
+        var idJob = UUID.randomUUID();
+
+        var applyJob = ApplyJobEntity.builder().candidateId(idCandidate)
+            .jobId(idJob).build();
+
+        var applyJobCreated = ApplyJobEntity.builder().id(UUID.randomUUID()).build();
+
+        when(candidateRepository.findById(idCandidate)).thenReturn(Optional.of(new CandidateEntity()));
+        when(jobRepository.findById(idJob)).thenReturn(Optional.of(new JobEntity()));
+
+        when(applyJobRepository.save(applyJob)).thenReturn(applyJobCreated);
+
+        var result = applyJobCandidateService.execute(idCandidate, idJob);
+
+        org.assertj.core.api.Assertions.assertThat(result).hasFieldOrProperty("id");
+        assertNotNull(result.getId());
+       // assertThat(result).hasFIeldOrProperty("id");
     }
 }
