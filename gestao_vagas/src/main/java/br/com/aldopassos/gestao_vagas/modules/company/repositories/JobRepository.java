@@ -11,7 +11,7 @@ import java.util.UUID;
 @RestController
 public interface JobRepository extends JpaRepository<JobEntity,UUID>{
     
-    List<JobEntity> findByDescriptionIgnoreCaseContanining(String filter);
+    List<JobEntity> findByDescriptionIgnoreCaseContaining(String filter);
     
     List<JobEntity> findByCompanyId(UUID companyId);
 }
