@@ -59,10 +59,10 @@ public class CreateJobControllerTest {
         var createdJobDTO = CreateJobDTO.builder()
         .benefits("Benefits_Test")
         .description("Description_Test")
-        .level("Level_Test")
+        .level("LEVEL_TEST")
         .build();
         
-        var result = mvc.perform(MockMvcRequestBuilders.post("/company/job/")
+        var result = mvc.perform(MockMvcRequestBuilders.post("/company/job")
             .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtils.objectToJSON(createdJobDTO))
             .header("Authorization", TestUtils.generateToken(company.getId(), "JAVAGAS_@123#")))
@@ -71,6 +71,21 @@ public class CreateJobControllerTest {
             System.out.println(result);
     }
 
-    
+    @Test
+    public void should_not_be_able_to_create_a_new_job_if_company_not_found() throws Exception {
+        var createdJobDTO = CreateJobDTO.builder()
+        .benefits("Benefits_Test")
+        .description("Description_Test")
+        .level("Level_Test")
+        .build();
+        
+        var result = mvc.perform(MockMvcRequestBuilders.post("/company/job/")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtils.objectToJSON(createdJobDTO))
+            .header("Authorization", TestUtils.generateToken(UUID.randomUUID(), "JAVAGAS_@123#")))
+            .andExpect(MockMvcResultMatchers.status().is(400));
+
+            System.out.println(result);
+    }
 
 }

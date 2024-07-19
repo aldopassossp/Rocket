@@ -40,7 +40,7 @@ public class SecurityFilter extends OncePerRequestFilter{
                          return;
                     }
 
-                    var roles = token.getClaim("role").asList(Object.class);
+                    var roles = token.getClaim("roles").asList(Object.class);
 
                     var grants = roles.stream()
                         .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toString()))
@@ -49,7 +49,7 @@ public class SecurityFilter extends OncePerRequestFilter{
                     request.setAttribute("company_id", token.getSubject());
                     UsernamePasswordAuthenticationToken auth =
                      new UsernamePasswordAuthenticationToken(token.getSubject()
-                     , null, Collections.emptyList());
+                     , null, grants);
                      SecurityContextHolder.getContext().setAuthentication(auth);
                  }
 

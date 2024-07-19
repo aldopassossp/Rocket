@@ -28,7 +28,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/company/job")
+@RequestMapping("/company")
 public class JobController {
     
     @Autowired
@@ -37,7 +37,7 @@ public class JobController {
     @Autowired
     private ListAllJobsByCompanyService listAllJobsByCompanyService;
 
-    @PostMapping("/")
+    @PostMapping("/job")
     @PreAuthorize("hasRole('COMPANY')")
     @Tag(name = "Vagas", description = "Informações das Vagas")
     @Operation(summary = "Cadastro de vagas", description = "Essa função é responsável por cadastrar as vagas dentro da empresa")
@@ -46,6 +46,9 @@ public class JobController {
     public ResponseEntity<Object> create(@Valid @RequestBody CreateJobDTO createJobDTO, HttpServletRequest request){
 
         var companyId = request.getAttribute("company_id");
+
+        System.out.println(companyId);
+        System.out.println("#################################");
        // jobEntity.setCompanyId(UUID.fromString(companyId.toString()));
         try {
             var jobEntity = JobEntity.builder()
@@ -55,7 +58,14 @@ public class JobController {
             .level(createJobDTO.getLevel())
             .build();
 
+            System.out.println("############################");
+            System.out.println(jobEntity.toString());
+
             var result = this.createJobService.execute(jobEntity);
+
+            System.out.println("############################");
+            System.out.println(result);       
+
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
