@@ -47,8 +47,6 @@ public class JobController {
 
         var companyId = request.getAttribute("company_id");
 
-        System.out.println(companyId);
-        System.out.println("#################################");
        // jobEntity.setCompanyId(UUID.fromString(companyId.toString()));
         try {
             var jobEntity = JobEntity.builder()
@@ -58,13 +56,7 @@ public class JobController {
             .level(createJobDTO.getLevel())
             .build();
 
-            System.out.println("############################");
-            System.out.println(jobEntity.toString());
-
-            var result = this.createJobService.execute(jobEntity);
-
-            System.out.println("############################");
-            System.out.println(result);       
+            var result = this.createJobService.execute(jobEntity);  
 
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
